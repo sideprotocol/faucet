@@ -54,10 +54,14 @@
       </main>
     
       <footer class="my-5 pt-5 text-muted text-center text-small">
-        <p class="my-2"> Faucet Address: {{ faucet }}, <br> Balance: {{ balance.amount }} {{balance.denom}}</p>
-        <p class="mb-1">&copy; 2022 Built By <a href="https://ping.pub">Ping.pub</a><span id="deployer" v-html="deployer"></span></p>
+        <p class="my-2" style="color:rgba(255, 255, 255, 0.5)"> Faucet Address: {{ faucet }}, <br> Balance: {{ balance.amount }} {{balance.denom}}</p>
+        <p class="mt-5">
+          <span style="color:rgba(255, 255, 255, 0.5)">&copy; 2022 Built By </span>
+          <a href="https://ping.pub">Ping.pub</a>
+          <span id="deployer" v-html="deployer"></span></p>
         <ul class="list-inline">
-          <li class="list-inline-item"><a href="https://github.com/ping-pub/faucet.git">Deploy a new instance?</a></li>
+          <li class="list-inline-item">
+            <a href="https://github.com/ping-pub/faucet.git">Deploy a new instance?</a></li>
         </ul>
       </footer>
       <div style="position: absolute;bottom: 0;width: 100%;">
