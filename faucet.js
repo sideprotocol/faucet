@@ -17,6 +17,7 @@ import { FrequencyChecker } from './checker.js';
 console.log("loaded config: ", conf)
 
 const app = express()
+app.use(express.static('public'))
 
 const checker = new FrequencyChecker(conf)
 
