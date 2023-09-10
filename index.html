@@ -14,6 +14,9 @@
         margin: 0;
         padding: 0;
       }
+      .select-chose{
+        background: linear-gradient(180deg, #FAFAFF 0%, #CFD4FE 100%);
+      }
     </style>
   </head>
   <body>
@@ -28,7 +31,7 @@
       <div style="position: absolute;top: 100px;right:90px;width: 100%;z-index: 0;text-align: right;">
         <img src="/moon.png"/> 
       </div>
-      <main class="container-md" style="font-family: Inter;">
+      <main class="container-md " style="font-family: Inter;position: relative;">
         <div class="py-5 mt-5 text-white">
           <h1><span id="testnet">{{ testnet }}</span> Faucet</h1>
           <p class="lead" style="color:rgba(255, 255, 255, 0.5)">Dear, Cosmonauts! <br>
@@ -42,7 +45,9 @@
                   <option v-for="c in conf.blockchains">{{c}}</option>
                 </select>
               </span>
+
               <input id="address" class="form-control" :placeholder="placeholder" v-model="address" name="address"> 
+              
               <button type="button" class="btn btn-secondary d-flex flex-row " @click="requestToken(this)">
                 <span>
                   <span id="button-loading" class="spinner-border spinner-border-sm mt-1 mr-1" style="display:none" role="status" aria-hidden="true"></span>
@@ -50,13 +55,32 @@
                <span class="sr-only">Request Token</span>
               </button>
           </div>
+
+
+          <div class="d-flex">
+            <span class="">
+              <select class="select-chose" v-model="chain" @change="onChange()">
+                <option v-for="c in conf.blockchains">{{c}}</option>
+              </select>
+            </span>
+
+            <input id="address" class="form-control" :placeholder="placeholder" v-model="address" name="address"> 
+            
+            <button type="button" class="btn btn-secondary d-flex flex-row " @click="requestToken(this)">
+              <span>
+                <span id="button-loading" class="spinner-border spinner-border-sm mt-1 mr-1" style="display:none" role="status" aria-hidden="true"></span>
+              </span>
+             <span class="sr-only">Request Token</span>
+            </button>
+           
+        </div>
         </div>
   
         <div id="message" v-html="message"></div>
   
       </main>
     
-      <footer class="my-5 pt-5 text-muted text-center text-small">
+      <footer class="my-5 pt-5 text-muted text-center text-small" style="position: relative;">
         <p class="my-2" style="color:rgba(255, 255, 255, 0.5)"> Faucet Address: {{ faucet }}, <br> Balance: {{ balance.amount }} {{balance.denom}}</p>
         <p class="mt-5">
           <span style="color:rgba(255, 255, 255, 0.5)">&copy; 2022 Built By </span>
