@@ -14,8 +14,33 @@
         margin: 0;
         padding: 0;
       }
-      .select-chose{
+      .select-chose-contain{
         background: linear-gradient(180deg, #FAFAFF 0%, #CFD4FE 100%);
+      }
+      .select-chose{
+        border: none;
+        background: transparent;
+        font-weight: 600;
+        color: #000836;
+
+      }
+      .faucet-input,.faucet-input:focus{
+        border-radius: 16px;
+        border: 2px solid  #9DE8EE;
+        background: #2B335D;
+        backdrop-filter: blur(25px);
+        color: #ECEEFF;
+        font-weight: 500;
+        font-size:1.2rem ;
+      }
+      .btn-faucet {
+        white-space: pre;
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.47);
+        background: linear-gradient(225deg, #18C8FF 14.89%, #933FFE 85.85%);
+        padding: 0.75rem 1.5rem;
+        margin-left: 0.5rem;
+        font-weight: 600;
       }
     </style>
   </head>
@@ -25,7 +50,7 @@
       <div >
         <img src="/hero-bg.png"/ style="width: 100%;"> 
       </div>
-      <div style="position: absolute;top: 60px;left:90px;width: 100%;z-index: 0;">
+      <div style="position: absolute;top: 60px;left:5.5rem;width: 100%;z-index: 0;">
         <img src="/logo.svg"/> 
       </div>
       <div style="position: absolute;top: 100px;right:90px;width: 100%;z-index: 0;text-align: right;">
@@ -40,7 +65,7 @@
         </div>
         <div class="row g-5">
           <div class="input-group">
-              <span class="input-group-text">
+              <span class="input-group-text ">
                 <select v-model="chain" @change="onChange()">
                   <option v-for="c in conf.blockchains">{{c}}</option>
                 </select>
@@ -57,22 +82,21 @@
           </div>
 
 
-          <div class="d-flex">
-            <span class="">
-              <select class="select-chose" v-model="chain" @change="onChange()">
-                <option v-for="c in conf.blockchains">{{c}}</option>
-              </select>
-            </span>
-
-            <input id="address" class="form-control" :placeholder="placeholder" v-model="address" name="address"> 
-            
-            <button type="button" class="btn btn-secondary d-flex flex-row " @click="requestToken(this)">
+          <div class="d-flex mb-3">
+            <div class="input-group">
+              <span class="input-group-text select-chose-contain">
+                <select class="select-chose" v-model="chain" @change="onChange()">
+                  <option v-for="c in conf.blockchains">{{c}}</option>
+                </select>
+              </span>
+              <input id="address" class="form-control faucet-input" :placeholder="placeholder" v-model="address" name="address"> 
+            </div>
+            <button type="button" class="btn btn-secondary btn-faucet d-flex flex-row " @click="requestToken(this)">
               <span>
                 <span id="button-loading" class="spinner-border spinner-border-sm mt-1 mr-1" style="display:none" role="status" aria-hidden="true"></span>
               </span>
              <span class="sr-only">Request Token</span>
-            </button>
-           
+            </button>     
         </div>
         </div>
   
