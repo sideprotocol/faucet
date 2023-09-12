@@ -132,7 +132,7 @@ async function sendCosmosTx(recipient, chain) {
     // const recipient = "cosmos1xv9tklw7d82sezh9haa573wufgy59vmwe6xxe5";
     const amount = chainConf.tx.amount;
     const fee = chainConf.tx.fee;
-    return client.sendTokens(firstAccount.address, recipient, [amount], fee);
+    return client.sendTokens(firstAccount.address, recipient, amount, fee);
   }
   throw new Error(`Blockchain Config [${chain}] not found`)
 }
