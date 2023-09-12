@@ -87,7 +87,7 @@
       </main>
     
       <footer class="my-5 pt-5 text-muted text-center text-small" style="position: relative;">
-        <p class="my-2" style="color:rgba(255, 255, 255, 0.5)"> Faucet Address: {{ faucet }}, <br> Balance: {{ balance.amount }} {{balance.denom}}</p>
+        <p class="my-2" style="color:rgba(255, 255, 255, 0.5)"> Faucet Address: {{ faucet }}, <br> Balance: {{ balance.map(x => `${x.amount}/${x.denom}`).join(",")</p>
         <p class="mt-5">
           <span style="color:rgba(255, 255, 255, 0.5)">&copy; 2022 Built By </span>
           <a href="https://ping.pub">Ping.pub</a>
