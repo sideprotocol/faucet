@@ -67,7 +67,7 @@ app.get('/balance/:chain', async (req, res) => {
 
         const client = await SigningStargateClient.connectWithSigner(rpcEndpoint, wallet);
         const [firstAccount] = await wallet.getAccounts();
-        await client.getBalance(firstAccount.address, chainConf.tx.amount.denom).then(x => {
+        await client.getAllBalances(firstAccount.address).then(x => {
           return balance = x
         }).catch(e => console.error(e));
       }
@@ -117,7 +117,6 @@ app.listen(conf.port, () => {
 })
 
 async function sendCosmosTx(recipient, chain) {
-  // const mnemonic = "surround miss nominee dream gap cross assault thank captain prosper drop duty group candy wealth weather scale put";
   const chainConf = conf.blockchains.find(x => x.name === chain) 
   if(chainConf) {
     const wallet = await DirectSecp256k1HdWallet.fromMnemonic(chainConf.sender.mnemonic, chainConf.sender.option);
