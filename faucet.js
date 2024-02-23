@@ -23,6 +23,7 @@ console.log("loaded config: ", conf);
 const app = express();
 
 app.set("view engine", "ejs");
+app.set("trust proxy", true);
 
 const checker = new FrequencyChecker(conf);
 
@@ -98,7 +99,8 @@ app.get("/balance/:chain", async (req, res) => {
 
 app.get("/send/:chain/:address", async (req, res) => {
   const { chain, address } = req.params;
-  const ip = req.headers["x-real-ip"] || req.headers["X-Real-IP"] || req.headers["X-Forwarded-For"] || req.ip;
+  const forwardedIps = (req.headers["x-forwarded-for"] || "").split(",")[0].trim();
+  const ip = req.headers["x-real-ip"] || req.headers["X-Real-IP"] || forwardedIps || req.ip;
   console.log("request tokens to ", address, ip);
   if (chain || address) {
     try {
