@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <script src="https://www.google.com/recaptcha/enterprise.js?render=6LdIO30pAAAAAD34k06IWZB95y4zlRxokLXJGWy4"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Faucet for Cosmos SDK Blockchain</title>
@@ -149,23 +150,32 @@
           },
           requestToken(obj) {
             if (this.address) {
-              // button state
-              obj.disabled = true
-              document.getElementById("button-loading").style.display = 'block';
-              
-              fetch(`/send/${this.chain}/${this.address}`).then(response => response.json()).then(data => {
-                  // button state
-                  obj.disabled = false
-                  document.getElementById("button-loading").style.display = 'none';
-                  // show result
-                  this.message = `
-                  <div class="alert alert-${data.result.code ===0? 'success': 'danger'} alert-dismissible show fade mt-2" role="alert">
-                      <li>${data.result.code ===0? 'Token sent': 'Request failed'}</li>
-                      <textarea class="form-control mt-1" rows="5" style="background-color:transparent">${JSON.stringify(data, null, 2)}</textarea>
-                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                  </div>
+              grecaptcha.enterprise.ready(async () => {
+                const token = await grecaptcha.enterprise.execute('6LdIO30pAAAAAD34k06IWZB95y4zlRxokLXJGWy4', {action: 'transaction_confirmed'});
+                const res = await fetch("/verifyCaptcha",{
+                      method: "GET",
+                      headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}` // Assuming your token variable is named 'token'
+                      }
+                  });
+                // button state
+                obj.disabled = true
+                document.getElementById("button-loading").style.display = 'block';
+                fetch(`/send/${this.chain}/${this.address}`).then(response => response.json()).then(data => {
+                    // button state
+                    obj.disabled = false
+                    document.getElementById("button-loading").style.display = 'none';
+                    // show result
+                    this.message = `
+                    <div class="alert alert-${data.result.code ===0? 'success': 'danger'} alert-dismissible show fade mt-2" role="alert">
+                        <li>${data.result.code ===0? 'Token sent': 'Request failed'}</li>
+                        <textarea class="form-control mt-1" rows="5" style="background-color:transparent">${JSON.stringify(data, null, 2)}</textarea>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
                   `
-              });
+                  });
+                });
             } else {
                 this.message = '<span class="text-danger">Address is required</span>'
             }
